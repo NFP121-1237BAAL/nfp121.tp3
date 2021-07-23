@@ -24,44 +24,102 @@ package question2;
  *          engagements, et suivi d'un appel à tearDown(), qui les détruit.
  */
 public class Pile2Test extends junit.framework.TestCase {
-	// Définissez ici les variables d'instance nécessaires à vos engagements;
-	// Vous pouvez également les saisir automatiquement du présentoir
-	// à l'aide du menu contextuel "Présentoir --> Engagements".
-	// Notez cependant que ce dernier ne peut saisir les objets primitifs
-	// du présentoir (les objets sans constructeur, comme int, float, etc.).
+    private PileI p1;
+    private PileI p2;
+    /**
+     * Constructeur de la classe-test Pile2Test
+     */
+    public Pile2Test() {
+    }
 
-	/**
-	 * Constructeur de la classe-test Pile2Test
-	 */
-	public Pile2Test() {
-	}
+    /**
+     * Met en place les engagements.
+     * 
+     * Méthode appelée avant chaque appel de méthode de test.
+     */
+    protected void setUp() // throws java.lang.Exception
+    {
+        p1 = new Pile2();
+        p2 = new Pile2(6);
+    }
 
-	/**
-	 * Met en place les engagements.
-	 * 
-	 * Méthode appelée avant chaque appel de méthode de test.
-	 */
-	protected void setUp() // throws java.lang.Exception
-	{
-		// Initialisez ici vos engagements
-	}
+    public void test_Pile1_capacite() {
+        assertEquals(PileI.CAPACITE_PAR_DEFAUT, p1.capacite());
+        assertEquals(6, p1.capacite());
+        }
+    public void test_Pile_estPleine_taille_sommet() throws Exception {
+        PileI p = new Pile2(2);
+        p.empiler(new Integer(2));
+        assertEquals(1, p.taille());
+        assertEquals(new Integer(2), p.sommet());
+        p.empiler(new Integer(3));
+        assertEquals(2, p.taille());
+        assertEquals(new Integer(3), p.sommet());
+        assertEquals(true, p.estPleine());
+        assertEquals(p.taille(), p.capacite());
+        try {
+         p.empiler(new Integer(0));
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof question1.PilePleineException);
+        }
+    }
+     public void test_Pile_estVide() throws Exception {
+        PileI p = new Pile2(3);
+        assertEquals(true, p.estVide());
+        try {
+            Object r = p.depiler();
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof question1.PileVideException);
+        }
+    }
+    public void test_Pile_toString() throws Exception {
+        PileI pile1 = new Pile2(3);
+        assertEquals("toString incorrect ? ", "[]", pile1.toString());
+        pile1.empiler("a");
+        assertEquals("toString incorrect ? ", "[a]", pile1.toString());
+        pile1.empiler("b");
+        assertEquals("toString incorrect ? ", "[b, a]", pile1.toString());
+        pile1.empiler("c");
+        assertEquals("toString incorrect ? ", "[c, b, a]", pile1.toString());
 
-	/**
-	 * Supprime les engagements
-	 * 
-	 * Méthode appelée après chaque appel de méthode de test.
-	 */
-	protected void tearDown() // throws java.lang.Exception
-	{
-		// Libérez ici les ressources engagées par setUp()
-	}
+    }
+       public void test_Pile_TailleNegative() {
+        PileI p = new Pile2(-2);
+        assertEquals(p.CAPACITE_PAR_DEFAUT, p.capacite());
 
-	/**
-	 * Il ne vous reste plus qu'à définir une ou plusieurs méthodes de test. Ces
-	 * méthodes doivent vérifier les résultats attendus à l'aide d'assertions
-	 * assertTrue(<boolean>). Par convention, leurs noms devraient débuter par
-	 * "test". Vous pouvez ébaucher le corps grâce au menu contextuel
-	 * "Enregistrer une méthode de test".
-	 */
+    }
+
+    public void test_Pile_equals() throws Exception {
+
+        p1.empiler("A");
+        p1.empiler(2);
+        p1.empiler(1);
+
+        p2.empiler("A");
+        p2.empiler(2);
+        p2.empiler(1);
+        assertEquals(true,p1.equals(p2));
+        assertTrue("�galit� de deux piles ? ", p2.equals(p1));
+        assertTrue("�galit� de deux piles ? ", p1.equals(p1));
+
+        p2.empiler(1);
+        assertFalse("�galit� de deux piles ? ", p1.equals(p2));
+
+    }
+    protected void tearDown() // throws java.lang.Exception
+    {
+       p1=null;
+       p2=null;
+    }
+
+    /**
+     * Il ne vous reste plus qu'à définir une ou plusieurs méthodes de test. Ces
+     * méthodes doivent vérifier les résultats attendus à l'aide d'assertions
+     * assertTrue(<boolean>). Par convention, leurs noms devraient débuter par
+     * "test". Vous pouvez ébaucher le corps grâce au menu contextuel
+     * "Enregistrer une méthode de test".
+     */
 
 }

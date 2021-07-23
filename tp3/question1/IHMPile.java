@@ -37,18 +37,31 @@ public class IHMPile extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae){
         if(ae.getActionCommand().equals("empiler")){
 
-            // à compléter
+              try{
+      String s = donnee.getText();
+      Object obj = s ;
+      p. empiler (obj);}
 
-            // en cas d'exception
-            //contenu.setText( /* à compléter */"" + " estPleine !");
-
-        }else{
-
-            // à compléter
-            // en cas d'exception
-            //contenu.setText( /* à compléter */"" + " estVide !");
-        }
+    catch(NumberFormatException nfe){
+      donnee.setText("erreur de conversion ! ");
     }
+     catch (PilePleineException pe){
+     JOptionPane.showMessageDialog(this,"la Pile est pleine");
+    }}
+
+     else
+    if(ae.getActionCommand().equals("depiler")){
+          try{
+     Object obj= p. depiler ();
+     String resultat = obj.toString();
+     sommet.setText(resultat);}
+     catch(NumberFormatException nfe){
+     sommet.setText("erreur de conversion ! ");
+    }
+    catch (PileVideException pv){
+    JOptionPane.showMessageDialog(this,"la Pile est vide");}}
+        }
+    
 
     public static void main(String[] args){
         new IHMPile();

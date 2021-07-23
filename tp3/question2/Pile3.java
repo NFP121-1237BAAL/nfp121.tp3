@@ -13,64 +13,72 @@ import java.util.Vector;
  */
 public class Pile3 implements PileI {
 
-	private Vector<Object> v;
+    private Vector<Object> v;
+    public Pile3() {
+        this(PileI.CAPACITE_PAR_DEFAUT);
+    }
 
-	public Pile3() {
-		this(0);
-	}
+    public Pile3(int taille) {
+       if (taille<0)
+       taille = CAPACITE_PAR_DEFAUT;
+       this.v = new Vector(taille);
+    }
 
-	public Pile3(int taille) {
-		// traiter le cas <=0
-		// à compléter
-	}
+    public void empiler(Object o) throws PilePleineException {
+         if (this.estPleine()) throw new PilePleineException();
+       Object ob = v.add(o);
+    }
 
-	public void empiler(Object o) throws PilePleineException {
-		// à compléter
-	}
+    public Object depiler() throws PileVideException {
+         if (v.size()==0)
+        throw new PileVideException();
+        Object o = v.get(v.size()-1);
+        v.remove(v.size()-1);
+        return o;
+    }
 
-	public Object depiler() throws PileVideException {
-		// à compléter
-		return null;
-	}
+    public Object sommet() throws PileVideException {
+        if (v.size()==0) throw new PileVideException();
+        return v.elementAt(v.size()-1);
+    }
 
-	public Object sommet() throws PileVideException {
-		// à compléter
-		return null;
-	}
+    public int taille() {
+        return v.size();
+    }
 
-	public int taille() {
-		// à compléter
-		return -1;
-	}
+    public int capacite() {
+           return v.capacity();
+    }
 
-	public int capacite() {
-		// à compléter
-		return -1;
-	}
+    public boolean estVide() {
+        return v.isEmpty();
+    }
 
-	public boolean estVide() {
-		// à compléter
-		return false;
-	}
+    public boolean estPleine() {
+         if (v.capacity() != v.size())
+      return false;
+      return true;
+    }
 
-	public boolean estPleine() {
-		// à compléter
-		return false;
-	}
+    public String toString() {
+        Vector ve = new Vector();
+        for(int i=1;i<=v.size();i++)
+        ve.add(v.get(v.size()-i));
+        return ve.toString();
+    }
 
-	public String toString() {
-		// à compléter
-		return "";
-	}
+    public boolean equals(Object o) {
+        if (o instanceof PileI) {
+      PileI p = (PileI) o;
+      return this.capacite() == p.capacite()
+          && this.hashCode() == p.hashCode();
+    } else
+      return false;
+    }
 
-	public boolean equals(Object o) {
-		// à compléter
-		return false;
-	}
-
-	// fonction fournie
-	public int hashCode() {
-		return toString().hashCode();
-	}
+    // fonction fournie
+    public int hashCode() {
+        return toString().hashCode();
+    }
 
 }
